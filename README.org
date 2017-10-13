@@ -1,0 +1,67 @@
+A [[https://github.com/getpelican/pelican][pelican]] plugin reading org-mode files and transforming them via pandoc.
+Based heavily on [[https://github.com/liob/pandoc_reader][pandoc_reader]]
+
+The existing =org_reader= plugin uses Emacs, which I didn't like. The metadata
+handling also isn't very plesant, I think, with a fixed set of possible metadata
+names. Last but not least, this plugin can add a highlighted version of the
+source of the whole document, which then can be displayed in the blog.
+
+* Requirements
+- [[https://github.com/jgm/pandoc][pandoc]]
+- recommended
+  - [[https://github.com/or/pandocfilter-pygments][pandocfilter-pygments]] to use Pygments for source blocks
+  - [[https://github.com/or/pygments-orgmode-lexer][pygments-orgmode-lexer]] to highlight org-mode SRC blocks containing org-mode,
+    required for full source generation of the document
+  - [[http://pygments.org/][Pygments]] needed for both of the above
+
+* Usage
+Enable the plugin.
+#+BEGIN_SRC python
+PLUGINS = ['pandoc_org_reader']
+#+END_SRC
+
+You can set extra arguments for the =pandoc= call, which is also how you can use
+=pandocfilter-pygments= to use Pygments instead of pandoc's highlighting.
+
+#+BEGIN_SRC python
+PANDOC_ORG_ARGS = [
+    '--mathjax',
+    '--filter=pandocfilter-pygments',
+]
+#+END_SRC
+
+You can also set extensions for that call.
+
+#+BEGIN_SRC python
+PANDOC_ORG_EXTENSIONS = [
+    '+hard_line_breaks',
+    '-citations'
+]
+#+END_SRC
+
+Finally, if you enable source generation, then Pygments will be used to generate
+a highlighted HTML representation of the whole document, which will be available
+as attribute in the pelican template: =article.source= or =page.source=.
+
+This requires [[https://github.com/or/pygments-orgmode-lexer][pygments-orgmode-lexer]].
+#+BEGIN_SRC python
+PANDOC_ORG_GENERATE_SOURCE = True
+#+END_SRC
+
+* Metadata
+The metadata must be given in the first block of org-mode properties. All
+properties will be handed over to the template as attributes of the object:
+=article.foobar= or =page.foobar=.
+
+Example:
+#+BEGIN_SRC org
+#+TITLE: My new post
+#+DATE: <2017-10-10 Tue>
+#+CATEGORY: personal
+#+AUTHOR: Oliver
+#+SUMMARY: My latest musings
+#+SLUG: my-new-post
+#+TAGS: thoughts, ramblings
+
+... rest of document...
+#+END_SRC
