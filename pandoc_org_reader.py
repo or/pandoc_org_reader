@@ -40,8 +40,8 @@ class PandocOrgReader(BaseReader):
                 else:
                     continue
 
-            if name == "date":
-                value = value.strip("<>").split()[0]
+            if name in ["date", "modified"]:
+                value = value.strip("<>")
             elif name == "tags":
                 value = [x.strip() for x in value.split(",") if x.strip()]
 
