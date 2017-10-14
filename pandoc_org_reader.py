@@ -57,8 +57,8 @@ class PandocOrgReader(BaseReader):
         pandoc_cmd.extend(extra_args)
 
         proc = subprocess.Popen(pandoc_cmd,
-                                stdin = subprocess.PIPE,
-                                stdout = subprocess.PIPE)
+                                stdin=subprocess.PIPE,
+                                stdout=subprocess.PIPE)
 
         document = proc.communicate(content.encode('utf-8'))[0].decode('utf-8')
         status = proc.wait()
@@ -71,8 +71,8 @@ class PandocOrgReader(BaseReader):
             pygmentize_cmd = ["pygmentize", "-l", "org", "-f", "html"]
 
             proc = subprocess.Popen(pygmentize_cmd,
-                                    stdin = subprocess.PIPE,
-                                    stdout = subprocess.PIPE)
+                                    stdin=subprocess.PIPE,
+                                    stdout=subprocess.PIPE)
 
             source = proc.communicate(raw_content.encode('utf-8'))[0].decode('utf-8')
             status = proc.wait()
