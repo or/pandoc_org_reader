@@ -16,37 +16,37 @@ source of the whole document, which then can be displayed in the blog.
 
 * Usage
 Enable the plugin.
-#+BEGIN_SRC python
+#+begin_src python
 PLUGINS = ['pandoc_org_reader']
-#+END_SRC
+#+end_src
 
 You can set extra arguments for the =pandoc= call, which is also how you can use
 =pandocfilter-pygments= to use Pygments instead of pandoc's highlighting.
 
-#+BEGIN_SRC python
+#+begin_src python
 PANDOC_ORG_ARGS = [
     '--mathjax',
     '--filter=pandocfilter-pygments',
 ]
-#+END_SRC
+#+end_src
 
 You can also set extensions for that call.
 
-#+BEGIN_SRC python
+#+begin_src python
 PANDOC_ORG_EXTENSIONS = [
     '+hard_line_breaks',
     '-citations'
 ]
-#+END_SRC
+#+end_src
 
 Finally, if you enable source generation, then Pygments will be used to generate
 a highlighted HTML representation of the whole document, which will be available
 as attribute in the pelican template: =article.source= or =page.source=.
 
 This requires [[https://github.com/or/pygments-orgmode-lexer][pygments-orgmode-lexer]].
-#+BEGIN_SRC python
+#+begin_src python
 PANDOC_ORG_GENERATE_SOURCE = True
-#+END_SRC
+#+end_src
 
 * Metadata
 The metadata must be given in the first block of org-mode properties. All
@@ -54,7 +54,7 @@ properties will be handed over to the template as attributes of the object:
 =article.foobar= or =page.foobar=.
 
 Example:
-#+BEGIN_SRC org
+#+begin_src org
 #+TITLE: My new post
 #+DATE: <2017-10-10 Tue>
 #+CATEGORY: personal
@@ -64,4 +64,4 @@ Example:
 #+TAGS: thoughts, ramblings
 
 ... rest of document...
-#+END_SRC
+#+end_src
